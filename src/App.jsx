@@ -6,10 +6,28 @@ import Dashboard from './components/Dashboard';
 import CourseManagement from './components/CourseManagement';
 import StudentHub from './components/StudentHub';
 import StudentPortal from './components/StudentPortal';
+import LandingPage from './components/LandingPage';
+import AuthScreen from './components/AuthScreen';
 
 function AppContent() {
-  const { role, activeTab } = useAcademy();
+  const { role, activeTab, screen, setScreen } = useAcademy();
 
+  // Route: Landing Screen
+  if (screen === 'landing') {
+    return <LandingPage onStart={() => setScreen('auth')} />;
+  }
+
+  // Route: Auth Screen (Login / Register / Forgot Password)
+  if (screen === 'auth') {
+    return (
+      <AuthScreen 
+        onLoginSuccess={() => setScreen('app')} 
+        onBackToLanding={() => setScreen('landing')} 
+      />
+    );
+  }
+
+  // Route: Main Application Workspace
   return (
     <div className="app-layout">
       {/* Side Navigation panel */}

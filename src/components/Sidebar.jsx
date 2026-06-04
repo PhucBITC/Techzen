@@ -8,11 +8,12 @@ import {
   MessageSquare, 
   BookOpenCheck,
   Settings,
-  HelpCircle
+  HelpCircle,
+  LogOut
 } from 'lucide-react';
 
 export default function Sidebar() {
-  const { activeTab, setActiveTab, role } = useAcademy();
+  const { activeTab, setActiveTab, role, logout } = useAcademy();
 
   const instructorMenuItems = [
     { id: 'dashboard', label: 'Tổng Quan', icon: LayoutDashboard },
@@ -61,19 +62,29 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      <div className="sidebar-footer">
-        <div className="user-profile-preview">
-          <div className="avatar-circle" style={{ backgroundColor: role === 'instructor' ? '#6366f1' : '#10b981', fontWeight: 600 }}>
-            {role === 'instructor' ? 'AM' : 'HV'}
+      <div className="sidebar-footer" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div className="user-profile-preview">
+            <div className="avatar-circle" style={{ backgroundColor: role === 'instructor' ? '#6366f1' : '#10b981', fontWeight: 600 }}>
+              {role === 'instructor' ? 'AM' : 'HV'}
+            </div>
+            <div className="user-info">
+              <span className="user-name">
+                {role === 'instructor' ? 'Alex Morgan' : 'Học Viên Demo'}
+              </span>
+              <span className="user-role">
+                {role === 'instructor' ? 'Giám đốc Học viện' : 'Student (Mock)'}
+              </span>
+            </div>
           </div>
-          <div className="user-info">
-            <span className="user-name">
-              {role === 'instructor' ? 'Alex Morgan' : 'Học Viên Demo'}
-            </span>
-            <span className="user-role">
-              {role === 'instructor' ? 'Giám đốc Học viện' : 'Student (Mock)'}
-            </span>
-          </div>
+          <button 
+            className="btn-toggle" 
+            title="Đăng xuất tài khoản" 
+            onClick={logout} 
+            style={{ color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.2)', backgroundColor: 'rgba(239, 68, 68, 0.05)' }}
+          >
+            <LogOut size={16} />
+          </button>
         </div>
       </div>
     </aside>

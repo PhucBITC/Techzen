@@ -4,9 +4,10 @@ import { INITIAL_COURSES, INITIAL_STUDENTS, INITIAL_MESSAGES, INITIAL_SUBMISSION
 const AcademyContext = createContext();
 
 export const AcademyProvider = ({ children }) => {
-  // Theme & Role States
+  // Theme, Role & Screen States
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [role, setRole] = useState(() => localStorage.getItem('role') || 'instructor');
+  const [screen, setScreen] = useState(() => localStorage.getItem('screen') || 'landing');
   const [activeTab, setActiveTab] = useState('dashboard');
 
   // Core Data States (Sync from LocalStorage or mockData)
@@ -44,6 +45,10 @@ export const AcademyProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('role', role);
   }, [role]);
+
+  useEffect(() => {
+    localStorage.setItem('screen', screen);
+  }, [screen]);
 
   useEffect(() => {
     localStorage.setItem('courses', JSON.stringify(courses));
@@ -192,6 +197,12 @@ export const AcademyProvider = ({ children }) => {
     }));
   };
 
+  // Logout Action
+  const logout = () => {
+    setScreen('landing');
+    setSelectedStudentId(null);
+  };
+
   // Toggle Theme
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -203,6 +214,9 @@ export const AcademyProvider = ({ children }) => {
       toggleTheme,
       role,
       setRole,
+      screen,
+      setScreen,
+      logout,
       activeTab,
       setActiveTab,
       
